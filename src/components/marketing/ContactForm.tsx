@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 const WHATSAPP = "201001234567";
 
@@ -9,7 +9,7 @@ export default function ContactForm() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const text = `السلام عليكم، معاك ${name || "عميل جديد"}${
       phone ? ` (موبايل: ${phone})` : ""
@@ -51,7 +51,7 @@ export default function ContactForm() {
         <span>رسالتك</span>
         <textarea
           name="message"
-          rows="4"
+          rows={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="عايز تستفسر عن إيه؟ (شقة، فيلا، شاليه، استشارة…)"

@@ -1,11 +1,26 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import Image from "next/image";
 
 const WHATSAPP = "201001234567";
 
-export const PROPERTIES = [
+type Property = {
+  id: number;
+  title: string;
+  location: string;
+  city: string;
+  price: number;
+  priceLabel: string;
+  area: number;
+  beds: number;
+  baths: number;
+  type: string;
+  image: string;
+  badge?: string;
+};
+
+const PROPERTIES: Property[] = [
   {
     id: 1,
     title: "شقة فاخرة بفيو لاندسكيب",
@@ -101,7 +116,7 @@ const BUDGETS = [
 
 function PinIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M12 21s-7-7.4-7-12a7 7 0 1 1 14 0c0 4.6-7 12-7 12z" />
       <circle cx="12" cy="9" r="2.5" />
     </svg>
@@ -109,7 +124,7 @@ function PinIcon() {
 }
 function BedIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7" />
       <path d="M3 14h18" />
       <path d="M6 9V6h6v3" />
@@ -118,7 +133,7 @@ function BedIcon() {
 }
 function BathIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3z" />
       <path d="M6 12V6a2 2 0 0 1 2-2h4" />
       <path d="M7 19l-1 2M17 19l1 2" />
@@ -127,7 +142,7 @@ function BathIcon() {
 }
 function AreaIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M4 9V4h5" />
       <path d="M20 15v5h-5" />
       <path d="M4 4l7 7M20 20l-7-7" />
@@ -151,7 +166,7 @@ export default function SearchHome() {
     });
   }, [type, city, budget]);
 
-  const onSearch = (e) => {
+  const onSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     setType(String(data.get("type") || "الكل"));
